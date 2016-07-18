@@ -1,5 +1,9 @@
 package com.cloudster;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -52,6 +56,38 @@ public class EncryptionDecryptionAES {
 	public static void main(String[] args) {
 		String key = "Bar12345Bar12345"; // 128 bit key
 		String initVector = "RandomInitVector"; // 16 bytes IV
+		
+		
+		String dir = "C:\\Users\\rahul_parikh\\Devlopment\\HowToGeekFolder\\Test";
+
+		FileInputStream inFile = new FileInputStream(new File(dir,
+				"For CAC event.docx"));
+
+		File out = new File(dir, "For CAC event.docx.des");
+		if (!out.exists()) {
+			out.createNewFile();
+		}
+
+		FileOutputStream outFile = new FileOutputStream(out);
+		
+		
+		byte[] input = new byte[64];
+		int bytesRead;
+		while ((bytesRead = inFile.read(input)) != -1) {
+			byte[] output = cipher.update(input, 0, bytesRead);
+			if (output != null)
+				outFile.write(output);
+		}
+		
+		byte[] output = cipher.doFinal();
+		if (output != null)
+			outFile.write(output);
+
+		inFile.close();
+		outFile.flush();
+		outFile.close();
+		
+		
 
 		System.out.println(decrypt(key, initVector,
 				encrypt(key, initVector, "Hello World")));
