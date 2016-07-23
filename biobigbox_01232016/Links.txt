@@ -1,0 +1,5 @@
+https://github.com/samuelcampos/usbdrivedetector
+
+
+
+wmic logicaldisk  get description,deviceid,volumename,volumeSerialNumber

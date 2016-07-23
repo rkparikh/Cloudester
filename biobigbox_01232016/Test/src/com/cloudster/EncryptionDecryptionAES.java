@@ -56,8 +56,7 @@ public class EncryptionDecryptionAES {
 	public static void main(String[] args) {
 		String key = "Bar12345Bar12345"; // 128 bit key
 		String initVector = "RandomInitVector"; // 16 bytes IV
-		
-		
+
 		String dir = "C:\\Users\\rahul_parikh\\Devlopment\\HowToGeekFolder\\Test";
 
 		FileInputStream inFile = new FileInputStream(new File(dir,
@@ -69,8 +68,7 @@ public class EncryptionDecryptionAES {
 		}
 
 		FileOutputStream outFile = new FileOutputStream(out);
-		
-		
+
 		byte[] input = new byte[64];
 		int bytesRead;
 		while ((bytesRead = inFile.read(input)) != -1) {
@@ -78,7 +76,7 @@ public class EncryptionDecryptionAES {
 			if (output != null)
 				outFile.write(output);
 		}
-		
+
 		byte[] output = cipher.doFinal();
 		if (output != null)
 			outFile.write(output);
@@ -86,8 +84,6 @@ public class EncryptionDecryptionAES {
 		inFile.close();
 		outFile.flush();
 		outFile.close();
-		
-		
 
 		System.out.println(decrypt(key, initVector,
 				encrypt(key, initVector, "Hello World")));
