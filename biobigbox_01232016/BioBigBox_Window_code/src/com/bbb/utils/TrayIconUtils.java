@@ -174,6 +174,10 @@ public class TrayIconUtils {
                     item.setFont(font);
                     popup.add(item);
                     popup.addSeparator();
+                    
+					// New Sync Option
+					LocalSyncUtil.addSyncOptionMenu(popup);
+                    
                     if (Initialize.fileStopStatus == 5) {
                         item = new MenuItem("Select Syncing Directory");
 
@@ -254,6 +258,10 @@ public class TrayIconUtils {
                     item.setFont(font);
                     popup.add(item);
                     popup.addSeparator();
+                    
+                    // New Sync Option
+					LocalSyncUtil.addSyncOptionMenu(popup);
+					
                     if (Initialize.fileStopStatus == 5) {
                         item = new MenuItem("Select Syncing Directory");
 
@@ -408,10 +416,18 @@ public class TrayIconUtils {
                 }
                 case "Restore": {
                     try {
-                        if (!MainAppFrame.restoreDia.downloadProgressBarDia.isVisible() && !MainAppFrame.restoreDia.isVisible()) {
-                            MainAppFrame.restoreDia.setDownloadFileList("");
-                            MainAppFrame.restoreDia.setVisible(true);
-                        }
+                    	String restoreFrom = LocalSyncUtil.showBackupRestoreDialogue();
+                    	if(restoreFrom==null){
+                    		return;
+                    	}
+                    	else if(LocalSyncUtil.CLOUD.equals(restoreFrom)){
+	                        if (!MainAppFrame.restoreDia.downloadProgressBarDia.isVisible() && !MainAppFrame.restoreDia.isVisible()) {
+	                            MainAppFrame.restoreDia.setDownloadFileList("");
+	                            MainAppFrame.restoreDia.setVisible(true);
+	                        }
+                    	}else if(LocalSyncUtil.LOCAL.equals(restoreFrom)){
+                    		
+                    	}
 
                     } catch (Exception ex) {
                         logger.error("Progress Sync Error " + ex);

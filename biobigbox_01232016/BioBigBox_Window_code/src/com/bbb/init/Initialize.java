@@ -68,7 +68,26 @@ public class Initialize {
     public static Integer emailStatus = 0;
     public static int count =1;
 
-    public static String getUsername() {
+	private static boolean isPaidCustomer;
+	private static String currentExternalDrive;
+
+	public static boolean isPaidCustomer() {
+		return isPaidCustomer;
+	}
+
+	public static void setPaidCustomer(boolean isPaidCustomer) {
+		Initialize.isPaidCustomer = isPaidCustomer;
+	}
+
+	public static String getCurrentExternalDrive() {
+		return currentExternalDrive;
+	}
+
+	public static void setCurrentExternalDrive(String currentExternalDrive) {
+		Initialize.currentExternalDrive = currentExternalDrive;
+	}
+
+	public static String getUsername() {
         return username;
     }
 
