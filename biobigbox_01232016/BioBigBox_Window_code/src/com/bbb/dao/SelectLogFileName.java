@@ -6,6 +6,7 @@
 package com.bbb.dao;
 
 import com.bbb.init.Initialize;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,12 +29,16 @@ public class SelectLogFileName {
         try {
             logger.info("Select Log File   : ");
             Connection conn = Initialize.getConn();
-            String Query_Select = "SELECT LOG_FILE_NAME FROM EMAIL WHERE LOGFILE_SENT_STATUS=0";
+            String Query_Select = "SELECT LOG_FILE_NAME FROM EMAIL WHERE LOGFILE_SENT_STATUS=0 ORDER BY CAST(DATE AS DATE) ASC";
             PreparedStatement ps = conn.prepareStatement(Query_Select);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                empty = false;
                 logFileName = rs.getString("LOG_FILE_NAME");
+                File f=new File(logFileName);
+				if (f.exists()) {
+					empty = false;
+					break;
+				}
             }
             if (empty) {
                 return "" + empty;

@@ -192,19 +192,22 @@ public class Main {
         public void run() {
             try {
                 while (true) {
+					try {
                     if (Initialize.getLoginToken() != null && !Initialize.getLoginToken().equals("")) {
                         //Thread sleep for 23 hours 55 min
                         Thread.sleep(81600000);
                         String getLogFileNameFromDB = SelectLogFileName.getLogFilePath();
                         String getDateInfo[] = getLogFileNameFromDB.split("dailyLogs");
-                        String getDate[] = getDateInfo[1].split("txt");
-                        if (dateFormat.format(currDate).equals(getDate[0])) {
+							if (getDateInfo.length > 1) {
+								String getDate[] = getDateInfo[1].split(".txt");
+								if (dateFormat.format(currDate).equals(getDate[0])) {
 
-                        } else {
-                            if (getLogFileNameFromDB != null && !getLogFileNameFromDB.equals("")) {
-                                File f = new File(getLogFileNameFromDB);
-                                WebServices.sendLogsEmail(f);
-                            }
+								} else {
+									if (getLogFileNameFromDB != null && !getLogFileNameFromDB.equals("")) {
+										File f = new File(getLogFileNameFromDB);
+										WebServices.sendLogsEmail(f);
+									}
+								}
                         }
                     } else if (Initialize.getLoginToken() != null && !Initialize.getLoginToken().equals("")) {
                         //Thread sleep for 5 min
@@ -213,6 +216,9 @@ public class Main {
                         //Thread sleep for 1 min
                         Thread.sleep(1000);
                     }
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
