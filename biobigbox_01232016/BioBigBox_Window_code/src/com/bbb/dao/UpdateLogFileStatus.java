@@ -21,12 +21,13 @@ public class UpdateLogFileStatus {
 
     /**
      * updateLogFileStatus() METHOD USE FOR UPDATE
+     * @param fileToUpdate 
      */
-    public static boolean updateLogFileStatus() {
+    public static boolean updateLogFileStatus(String fileToUpdate) {
         boolean statu = false;
         PreparedStatement ps = null;
         try {
-            String Update_Query = "UPDATE EMAIL SET LOGFILE_SENT_STATUS=1 WHERE LOGFILE_SENT_STATUS=0";
+            String Update_Query = "UPDATE EMAIL SET LOGFILE_SENT_STATUS=1 WHERE LOGFILE_SENT_STATUS=0 AND LOG_FILE_NAME='"+fileToUpdate+"'";
             Connection conn = Initialize.getConn();
             logger.info("Update LOGFILE SENT STATUS   : ");
             ps = conn.prepareStatement(Update_Query);

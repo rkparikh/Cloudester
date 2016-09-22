@@ -950,9 +950,9 @@ public class WebServices {
             System.out.println("executing request " + httppost.getAllHeaders());
             HttpResponse response = httpClient.execute(httppost);
             HttpEntity responseEntity = response.getEntity();
-            String result1 = IOUtils.toString(responseEntity.getContent());
-            System.out.println("result for sendLogsEmail upload:" + result1);
-            UpdateLogFileStatus.updateLogFileStatus();
+//            String result1 = IOUtils.toString(responseEntity.getContent());
+//            System.out.println("result for sendLogsEmail upload:" + result1);
+//            UpdateLogFileStatus.updateLogFileStatus();
             if (response.getStatusLine().getStatusCode() == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
                 String output;
@@ -963,14 +963,16 @@ public class WebServices {
                     System.out.println("sendLogsEmail Responed Json " + jsonObject);
                     if ((boolean) jsonObject.get("success")) {
                         result = true;
-                        UpdateLogFileStatus.updateLogFileStatus();
+                        UpdateLogFileStatus.updateLogFileStatus(uploadFile.getAbsolutePath());
                         logger.info("WebServices sendLogsEmail Error " + jsonObject);
                     } else {
                         //InsertEmailStatus.insertEmailStatus(Initialize.getUsername(), 0, Initialize.getLoginToken(), uploadFile.getPath());
                         logger.error("WebServices sendLogsEmail Error " + jsonObject);
                     }
                 }
-
+            }else{
+            	String result1 = IOUtils.toString(responseEntity.getContent());
+                System.out.println("result for sendLogsEmail upload:" + result1);
             }
         } catch (Exception e) {
 
